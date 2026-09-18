@@ -1,0 +1,43 @@
+/* Print stylesheet, loaded only via media="print" on cv.html.
+   Goal: a clean, black-on-white, single-column CV with no site chrome. */
+
+@media print {
+  @page { margin: 1.6cm; }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .cv-actions,
+  .nav-toggle {
+    display: none !important;
+  }
+
+  .wrap { max-width: none; padding: 0; }
+
+  a { color: #000; text-decoration: none; }
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #333;
+  }
+  a.no-print-href::after { content: ""; }
+
+  h1, h2, h3, h4 { color: #000; }
+
+  .cv-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .cv-entry { break-inside: avoid; page-break-inside: avoid; }
+
+  .cv-section h3 { border-bottom: 1px solid #000; }
+
+  .section { border-top: none; padding-block: 1em; }
+}

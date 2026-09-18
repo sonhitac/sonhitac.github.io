@@ -1,0 +1,577 @@
+/* ==========================================================================
+   Sonhita Chakraborty, Biomedical Communications portfolio.
+   Design tokens live at the top of this file. Colors, type, and spacing
+   are all CSS custom properties on :root: change a value once here and
+   it updates everywhere.
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   1. Tokens
+   ------------------------------------------------------------------------- */
+:root {
+  /* Palette, tuned for a family resemblance with artbysonhita.com
+     (white/off-white ground, warm-gray text, gold/tan accent, navy footer)
+     while keeping this site's own AA contrast requirements intact.
+     accent      = gold/tan, decorative weight: borders, rules, large display
+                   numerals (>=3:1 against bone/paper, not for small text)
+     accent-deep = gold/tan, text weight: links, buttons, labels
+                   (>=4.5:1 against bone/paper)
+     accent-2 / accent-2-deep alias the pair above; the site uses a single
+     accent hue, not a second color. */
+  --ink:        #2a2826;
+  --ink-soft:   #55524c;
+  --ink-faint:  #767268;
+  --bone:       #ffffff;
+  --paper:      #f3f1f0;
+  --paper-deep: #e2ded9;
+  --accent:      #a3855f;
+  --accent-deep: #7a6144;
+  --accent-2:      var(--accent);
+  --accent-2-deep: var(--accent-deep);
+  --line: rgba(42, 40, 38, 0.14);
+  --line-strong: rgba(42, 40, 38, 0.30);
+
+  /* Footer echoes artbysonhita.com's actual navy header/footer treatment,
+     with the accent at its true measured strength (safe here: light text
+     and gold both read at >=6.9:1 against this navy). */
+  --footer-bg: #070068;
+  --footer-text: #ffffff;
+  --footer-text-soft: #b7b5d6;
+  --footer-line: rgba(255, 255, 255, 0.18);
+  --accent-on-dark: #b8a07e;
+
+  --focus-ring: #2a2826;
+
+  /* Type */
+  --font-display: "Radley", "Iowan Old Style", "Sitka Small", Georgia, serif;
+  --font-body: "Inter Tight", "Seravek", "Segoe UI", Arial, sans-serif;
+
+  /* Spacing scale */
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2.25rem;
+  --sp-5: 3.5rem;
+  --sp-6: 5rem;
+  --sp-7: 7rem;
+  --sp-8: 10rem;
+
+  --container: 74rem;
+  --border-thin: 1px;
+}
+
+/* -------------------------------------------------------------------------
+   2. Reset & base
+   ------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a {
+  color: inherit;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.18em;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.12;
+  margin: 0 0 0.5em;
+  color: var(--ink);
+}
+
+h1 { font-size: clamp(2.35rem, 1.4rem + 3.6vw, 4.6rem); font-weight: 400; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.7rem, 1.2rem + 1.8vw, 2.6rem); font-weight: 400; }
+h3 { font-size: clamp(1.28rem, 1.1rem + 0.7vw, 1.6rem); }
+h4 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.06em; font-family: var(--font-body); font-weight: 600; }
+
+p { margin: 0 0 1.15em; }
+p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 0 0 1.15em; padding-left: 1.3em; }
+li { margin-bottom: 0.4em; }
+
+hr {
+  border: none;
+  border-top: var(--border-thin) solid var(--line);
+  margin: var(--sp-4) 0;
+}
+
+blockquote { margin: 0; }
+
+/* Focus visibility: a thick, unmissable offset outline in ink, never suppressed */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+:focus:not(:focus-visible) { outline: none; }
+a:focus-visible, button:focus-visible { border-radius: 1px; }
+
+/* Reduced motion: kill everything non-essential */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   3. Skip link
+   ------------------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--bone);
+  padding: 0.6em 1.1em;
+  z-index: 200;
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: var(--sp-2);
+  top: var(--sp-2);
+}
+
+/* -------------------------------------------------------------------------
+   4. Layout helpers
+   ------------------------------------------------------------------------- */
+.wrap {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.col-7 { grid-column: span 7; }
+.col-5 { grid-column: span 5; }
+.col-8 { grid-column: span 8; }
+.col-4 { grid-column: span 4; }
+.col-6 { grid-column: span 6; }
+.col-12 { grid-column: span 12; }
+.col-9 { grid-column: span 9; }
+.col-3 { grid-column: span 3; }
+
+@media (max-width: 800px) {
+  .col-7, .col-5, .col-8, .col-4, .col-6, .col-9, .col-3 { grid-column: span 12; }
+}
+
+.section {
+  padding-block: var(--sp-6);
+  border-top: var(--border-thin) solid var(--line);
+}
+.section:first-of-type { border-top: none; }
+.section--tint { background: var(--paper); }
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin-bottom: var(--sp-2);
+}
+.eyebrow--alt { color: var(--accent-2-deep); }
+
+.lede {
+  font-size: clamp(1.1rem, 1rem + 0.4vw, 1.35rem);
+  color: var(--ink-soft);
+  max-width: 38em;
+}
+
+/* -------------------------------------------------------------------------
+   5. Buttons & links-as-buttons
+   ------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75em 1.4em;
+  border: var(--border-thin) solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  background: transparent;
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+.btn:hover { background: var(--ink); color: var(--bone); }
+.btn--solid { background: var(--ink); color: var(--bone); }
+.btn--solid:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--bone); }
+.btn--accent { border-color: var(--accent); color: var(--accent-deep); }
+.btn--accent:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--bone); }
+
+.text-link {
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+.text-link:hover { color: var(--ink); }
+
+/* -------------------------------------------------------------------------
+   6. Site header / nav
+   ------------------------------------------------------------------------- */
+.site-header {
+  background: var(--bone);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-accent {
+  height: 5px;
+  background: var(--footer-bg);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.15rem;
+  gap: var(--sp-3);
+}
+
+.wordmark {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.nav-toggle {
+  display: none;
+  border: var(--border-thin) solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5em 0.9em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.primary-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+
+.primary-nav a {
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.primary-nav a:hover { color: var(--ink); border-color: var(--line-strong); }
+.primary-nav a[aria-current="page"] {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  .nav-toggle { display: inline-block; }
+  .primary-nav {
+    display: none;
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    background: var(--bone);
+    border-bottom: var(--border-thin) solid var(--line);
+    padding: var(--sp-2) clamp(1.25rem, 4vw, 3rem) var(--sp-3);
+  }
+  .primary-nav.is-open { display: block; }
+  .primary-nav ul { flex-direction: column; gap: var(--sp-1); }
+  .primary-nav a { display: block; padding: 0.5em 0; }
+}
+
+/* -------------------------------------------------------------------------
+   7. Footer
+   ------------------------------------------------------------------------- */
+.site-footer {
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  padding-block: var(--sp-5);
+  margin-top: var(--sp-7);
+}
+
+.site-footer .grid { align-items: start; }
+
+.site-footer h4 { color: var(--footer-text-soft); margin-bottom: 0.85em; }
+
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.95rem;
+}
+.footer-links li { margin-bottom: 0.5em; }
+.footer-links a { color: var(--accent-on-dark); text-decoration: none; }
+.footer-links a:hover { color: var(--footer-text); text-decoration: underline; }
+
+.footer-meta {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: var(--border-thin) solid var(--footer-line);
+  font-size: 0.85rem;
+  color: var(--footer-text-soft);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--sp-1);
+}
+.footer-meta a { text-decoration: underline; color: var(--footer-text-soft); }
+.footer-meta a:hover { color: var(--footer-text); }
+
+/* -------------------------------------------------------------------------
+   8. Placeholder image blocks (CSS/SVG only, no network requests)
+   ------------------------------------------------------------------------- */
+.placeholder {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--paper-deep);
+  background-image:
+    repeating-linear-gradient(135deg, rgba(42,40,38,0.09) 0 1px, transparent 1px 9px);
+  border: var(--border-thin) solid var(--line-strong);
+  color: var(--ink-soft);
+  overflow: hidden;
+}
+.placeholder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  box-shadow: inset 0 0 0 var(--border-thin) rgba(42,40,38,0.05);
+}
+.placeholder-label {
+  position: relative;
+  margin: var(--sp-2);
+  padding: 0.5em 0.75em;
+  background: var(--bone);
+  border: var(--border-thin) solid var(--line-strong);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  max-width: 22em;
+}
+.placeholder-label strong {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin-bottom: 0.2em;
+}
+
+.ar-16-9  { aspect-ratio: 16 / 9; }
+.ar-4-3   { aspect-ratio: 4 / 3; }
+.ar-3-4   { aspect-ratio: 3 / 4; }
+.ar-1-1   { aspect-ratio: 1 / 1; }
+.ar-3-2   { aspect-ratio: 3 / 2; }
+.ar-2-3   { aspect-ratio: 2 / 3; }
+.ar-21-9  { aspect-ratio: 21 / 9; }
+
+figure { margin: 0; }
+figcaption {
+  margin-top: 0.7em;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+figcaption .cap-medium {
+  display: block;
+  color: var(--ink-faint);
+  font-size: 0.82rem;
+  margin-top: 0.15em;
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------
+   9. Pull quotes
+   ------------------------------------------------------------------------- */
+.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 1.85rem);
+  line-height: 1.35;
+  color: var(--ink);
+  border-left: 3px solid var(--accent);
+  padding-left: var(--sp-3);
+  margin-block: var(--sp-4);
+}
+.pull-quote cite {
+  display: block;
+  margin-top: 0.6em;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+
+/* -------------------------------------------------------------------------
+   10. Numbered list / index rows (reserve for content that is genuinely
+       sequential or countable; not currently used on the site)
+   ------------------------------------------------------------------------- */
+.index-list { list-style: none; margin: 0; padding: 0; }
+.index-row {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: var(--sp-3);
+  padding-block: var(--sp-3);
+  border-top: var(--border-thin) solid var(--line);
+}
+.index-list > .index-row:first-child { border-top: none; }
+.index-num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--accent-deep);
+  font-weight: 400;
+}
+@media (max-width: 560px) {
+  .index-row { grid-template-columns: 1fr; gap: var(--sp-1); }
+}
+
+/* -------------------------------------------------------------------------
+   12. Publications / CV list formatting
+   ------------------------------------------------------------------------- */
+.pub-list { list-style: none; margin: 0; padding: 0; }
+.pub-list li {
+  padding-block: var(--sp-2);
+  border-top: var(--border-thin) solid var(--line);
+  padding-left: 0;
+  text-indent: 0;
+}
+.pub-list li:first-child { border-top: none; }
+.pub-list .pub-year {
+  font-weight: 700;
+  color: var(--accent-deep);
+}
+
+/* -------------------------------------------------------------------------
+   13. Page-specific: hero / masthead
+   ------------------------------------------------------------------------- */
+.masthead {
+  padding-block: var(--sp-7) var(--sp-6);
+}
+.masthead .eyebrow { margin-bottom: var(--sp-3); }
+.masthead h1 { max-width: 16ch; }
+
+/* -------------------------------------------------------------------------
+   14. Gallery grid (portfolio)
+   ------------------------------------------------------------------------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+}
+.gallery > figure { grid-column: span 3; }
+.gallery > figure.span-2 { grid-column: span 2; }
+.gallery > figure.span-4 { grid-column: span 4; }
+.gallery > figure.span-6 { grid-column: span 6; }
+
+@media (max-width: 720px) {
+  .gallery > figure,
+  .gallery > figure.span-2,
+  .gallery > figure.span-4,
+  .gallery > figure.span-6 { grid-column: span 6; }
+}
+
+/* -------------------------------------------------------------------------
+   15. CV page
+   ------------------------------------------------------------------------- */
+.cv-actions {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: var(--sp-5);
+}
+.cv-section h3 {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.35em;
+  margin-bottom: var(--sp-3);
+}
+.cv-entry { margin-bottom: var(--sp-3); }
+.cv-entry-head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  font-weight: 600;
+}
+.cv-entry-when {
+  color: var(--ink-faint);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.cv-entry-sub { color: var(--ink-soft); font-style: italic; margin-bottom: 0.3em; }
+
+/* -------------------------------------------------------------------------
+   16. 404 page
+   ------------------------------------------------------------------------- */
+.error-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+.error-code {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 3rem + 8vw, 9rem);
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: var(--sp-2);
+}
+
+/* -------------------------------------------------------------------------
+   17. Utility
+   ------------------------------------------------------------------------- */
+.mt-0 { margin-top: 0; }
+.center { text-align: center; }
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.quiet-aside {
+  font-size: 0.9rem;
+  color: var(--ink-faint);
+  margin-top: var(--sp-2);
+}
