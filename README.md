@@ -21,8 +21,6 @@ js/main.js         Mobile nav toggle + footer year, the only JS on the site
 
 assets/favicon.svg     Custom SVG favicon
 assets/images/         Drop final images here
-assets/cv.pdf          Does NOT exist yet, see below
-assets/writing-sample.pdf   Does NOT exist yet, see below
 ```
 
 Every page repeats the same `<header class="site-header">` and
@@ -52,18 +50,13 @@ The site's copy now comes from the finalized application materials (cover
 letter, CV, research statement, teaching dossier, and EDI statement). Read
 [`CONTENT-TODO.md`](CONTENT-TODO.md) for what is still a placeholder or an
 assumption: every remaining bracketed line and `NEEDS CLIENT` comment is
-listed there by page, along with the two missing files below.
+listed there by page.
 
-**Two files referenced but not included:**
-
-1. `assets/cv.pdf`, linked from the "Download PDF" button on `cv.html`.
-   Export a public version of the CV to PDF and drop it at that exact path.
-   The CV in the application materials includes a phone number, which the
-   website deliberately leaves out, so export a copy without it.
-2. `assets/writing-sample.pdf`, linked from `research.html`. The writing
-   sample (document 4 of the application) was not in the materials folder.
-
-Until those exist, the download buttons will 404 on GitHub Pages.
+**No downloads for now.** The site has no writing-sample download (the
+writing sample was not part of the materials folder), and `cv.html` has no PDF download
+button (only "Print this page"). If you add one later, export a public version of the CV
+without the phone number (the website deliberately leaves it out), save it as
+`assets/cv.pdf`, and add a button linking to it.
 
 ## Deploying to GitHub Pages
 

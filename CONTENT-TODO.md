@@ -15,11 +15,6 @@ every placeholder spot.
       installation photo). The alt text was drafted from looking at them;
       review it. Original uncompressed files are archived in
       `materials/image-originals/` (not published).
-- [ ] **Writing sample.** Document 4 of the application was not in the
-      materials folder. `research.html` still has a bracketed line describing
-      it and links to `assets/writing-sample.pdf`, which doesn't exist.
-- [ ] **`assets/cv.pdf`.** The "Download PDF" button on `cv.html` links to it
-      and will 404 until it's added (see section 3).
 - [ ] **`404.html`.** The one-line message is generic. Optional to change.
 - [ ] **Per-cover process notes.** The materials describe process for only
       two covers (Dendritic Delivery and the Molecular Cell sustainability
@@ -76,12 +71,13 @@ copy. Each is easy to reverse.
       address as the CV and cover letter. Confirm that's the address she
       wants on a public site.
 
-## 3. Files that don't exist yet
+## 3. Optional, later
 
-- [ ] `assets/cv.pdf`, referenced from `cv.html`. Export a version without
-      the phone number.
-- [ ] `assets/writing-sample.pdf`, referenced from `research.html`.
-- [ ] Images in `assets/images/` for the remaining placeholder blocks (see section 1).
+- [ ] A writing-sample download. The writing sample (document 4) was not in the
+      materials folder, so the site has none for now.
+- [ ] A CV PDF. `cv.html` has no download button for now. If
+      you add one, export a version without the phone number as
+      `assets/cv.pdf`, then add a button linking to it.
 
 ## Palette and brand
 
