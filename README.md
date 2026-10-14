@@ -10,8 +10,7 @@ file, edit the text, push to GitHub.
 index.html        Home
 research.html      Research program + selected publications
 teaching.html      Teaching philosophy and courses
-portfolio.html     Image-forward gallery of journal covers/exhibitions
-deconstructing-biology.html   Dedicated page for the Deconstructing Biology exhibition
+portfolio.html     Image-forward gallery of journal covers and the exhibition
 cv.html            Structured CV + print stylesheet + PDF download button
 edi.html           Dedicated EDI statement
 404.html           Custom not-found page
@@ -31,10 +30,8 @@ Every page repeats the same `<header class="site-header">` and
 `aria-current="page"` attribute, which always sits on the link matching the
 current page (this is what underlines the active nav item and tells screen
 readers where they are). If you edit the header or footer, copy the change
-into all 8 HTML files, then re-check each page's `aria-current` is still on
-the right link. `deconstructing-biology.html` is not in the primary nav (it's
-a detail page reached from Portfolio), so its header marks Portfolio as
-current rather than having its own nav entry.
+into all 7 HTML files, then re-check each page's `aria-current` is still on
+the right link. (`404.html` has no current link, since it isn't in the nav.)
 
 There is no dedicated Contact page. The footer, present on every page, already
 carries her real email, ORCID, and LinkedIn, so a separate page would only
@@ -121,21 +118,24 @@ as a family with [artbysonhita.com](https://artbysonhita.com): `--ink`,
 `--accent-deep` is the one safe for small links and buttons), and
 `--footer-bg`, `--footer-text`, and `--accent-on-dark` recreate that site's
 navy-with-gold-links footer treatment. To retint the whole site, change
-those tokens in one place. The type pairing (Radley for headings, matching
-artbysonhita.com's serif, and Inter Tight for body) is loaded once via
-Google Fonts in each page's `<head>`. Radley only ships as a single weight
-(regular, plus italic), so headings and pull-quotes are set at
-`font-weight: 400` rather than the heavier weights a display font would
-normally carry; if you swap in a font with more weights, revisit those
-rules in `style.css`. Swap the `<link>` and the two `var(--font-display)`
-/ `var(--font-body)` values in `style.css` to change fonts everywhere.
+those tokens in one place. The type pairing (Newsreader for headings and
+pull-quotes, Inter Tight for body) is loaded once via Google Fonts in each
+page's `<head>`. Only Newsreader's regular and italic styles at weight 400
+are loaded (with its optical-size axis, so large headings get display-cut
+letterforms), and headings and pull-quotes are set at `font-weight: 400` to
+match. If you want heavier headings, add the weight to the Google Fonts
+`<link>` on every page and raise the `font-weight` on `h1`, `h2`, `h3`, and
+`.pull-quote` in `style.css`. Swap the `<link>` and the two
+`var(--font-display)` / `var(--font-body)` values in `style.css` to change
+fonts everywhere.
 
 ## Adding real images
 
-Every image on the site is currently a CSS/SVG placeholder block (a
-hatched rectangle with a label), not a real `<img>` tag. This was
-deliberate, so the layout could be reviewed without needing real files or
-network access. To swap one in:
+The journal covers and the exhibition installation photo are real `<img>`
+tags (files in `assets/images/`). Every image that hasn't arrived yet is a
+CSS placeholder block (a hatched rectangle with a label), so the layout
+could be reviewed without needing real files. To swap a placeholder for a
+real image:
 
 ```html
 <!-- before -->
@@ -144,14 +144,16 @@ network access. To swap one in:
 </div>
 
 <!-- after -->
-<img src="assets/images/your-file.jpg" alt="A real, specific description of what's in the image." loading="lazy">
+<img src="assets/images/your-file.jpg" width="591" height="768" alt="A real, specific description of what's in the image." loading="lazy">
 ```
 
-Keep the same `<figure>`/`<figcaption>` wrapper so captions and metadata
-still line up. Aspect-ratio classes (`ar-4-3`, `ar-16-9`, `ar-1-1`, etc., in
-`style.css`) are only needed on the placeholder `<div>`; a real `<img>` can
-drop the class and just use its natural aspect ratio, or keep the class if
-you want to lock the ratio in the layout.
+Set `width` and `height` to the file's real pixel size (the stylesheet
+scales it responsively and keeps the proportions), which stops the page
+jumping as images load. Keep the same `<figure>`/`<figcaption>` wrapper so
+captions and metadata still line up. Aspect-ratio classes (`ar-4-3`,
+`ar-16-9`, `ar-1-1`, etc., in `style.css`) are only needed on placeholder
+`<div>`s. Use clear lowercase filenames with hyphens (no spaces or commas),
+and aim for about 1600px on the long edge and under roughly 400 KB.
 
 ## No tracking, no build step, no dependencies
 

@@ -43,7 +43,7 @@
   --focus-ring: #2a2826;
 
   /* Type */
-  --font-display: "Radley", "Iowan Old Style", "Sitka Small", Georgia, serif;
+  --font-display: "Newsreader", "Iowan Old Style", "Sitka Small", Georgia, serif;
   --font-body: "Inter Tight", "Seravek", "Segoe UI", Arial, sans-serif;
 
   /* Spacing scale */
@@ -77,6 +77,8 @@ body {
 }
 
 img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+figure img { border: var(--border-thin) solid var(--line); }
 
 a {
   color: inherit;
