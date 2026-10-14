@@ -10,11 +10,10 @@ every placeholder spot.
 
 ## 1. Still placeholders
 
-- [ ] **Remaining image.** Five covers and the exhibition installation
-      photo are in. The one placeholder block left is the
-      one-image-three-covers metabolism piece on `portfolio.html`. Alt text
-      for the images that are in was drafted from looking at them; review
-      it. Original uncompressed files are archived in
+- [ ] **Review image alt text.** All Portfolio and Home images are in (five
+      covers, the three-cover metabolism panorama, and the exhibition
+      installation photo). The alt text was drafted from looking at them;
+      review it. Original uncompressed files are archived in
       `materials/image-originals/` (not published).
 - [ ] **Writing sample.** Document 4 of the application was not in the
       materials folder. `research.html` still has a bracketed line describing
